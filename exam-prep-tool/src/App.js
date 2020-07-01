@@ -1,9 +1,18 @@
 import React from "react";
 import "./App.css";
-import MyLayout from "./container/Layout/MyLayout";
+import MyLayout from "./components/Layout/MyLayout";
+import ExamPrepTool from "./container/ExamPrepTool/ExamPrepTool";
+
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
-  return <MyLayout />;
+  return (
+    <BrowserRouter>
+      <MyLayout>
+        <ExamPrepTool />
+      </MyLayout>
+    </BrowserRouter>
+  );
 }
 
 export default App;

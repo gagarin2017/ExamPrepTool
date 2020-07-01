@@ -1,0 +1,31 @@
+.Tool {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  width: 80%;
+  margin: auto;
+}
+
+.Tool ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.Tool li {
+  display: none;
+  margin: 20px;
+}
+
+.Tool a {
+  text-decoration: none;
+  color: blackm;
+}
+
+.Tool .Results {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  width: 80%;
+  margin: auto;
+}

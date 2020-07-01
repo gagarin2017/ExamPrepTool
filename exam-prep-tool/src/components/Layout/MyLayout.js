@@ -21,7 +21,7 @@ export default class MyLayout extends Component {
               marginTop: "45px",
             }}
           >
-            Content
+            {this.props.children}
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>
