@@ -3,6 +3,7 @@ import React from "react";
 import TestResult from "./TestResult/TestResult";
 
 const TestResults = (props) => {
+  console.log("[TestResults] props", props);
   const emptyTestResult = (
     <TestResult
       paragraph={props.data}
@@ -19,7 +20,7 @@ const TestResults = (props) => {
     output = (
       <TestResult
         paragraph={props.data.paragraph}
-        date={props.data.date}
+        date={props.data.id}
         page={props.data.page}
         questionsTotal={props.data.questionsTotal}
         questionsCorrect={props.data.questionsCorrect}

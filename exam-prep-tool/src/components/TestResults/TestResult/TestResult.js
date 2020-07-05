@@ -3,9 +3,13 @@ import { Row, Col, Button, Tooltip } from "antd";
 
 import classes from "./TestResult.module.css";
 
-import { Route, NavLink } from "react-router-dom";
+import { Route, NavLink, withRouter } from "react-router-dom";
+
+import NewTestResult from "../NewTestResult/NewTestResult";
 
 const TestResult = (props) => {
+  console.log("[TestResult] props", props);
+
   const numberWrongQuestions = props.questionsTotal - props.questionsCorrect;
   const percentage = (props.questionsCorrect * 100) / props.questionsTotal;
 
@@ -65,7 +69,7 @@ const TestResult = (props) => {
     ) : (
       <Row>
         <Col span={24} className={classes.pageNumber}>
-          {props.date}
+          {new Date(props.date).toLocaleString()}
         </Col>
       </Row>
     );
@@ -75,11 +79,13 @@ const TestResult = (props) => {
       <Row>
         <Col span={18}></Col>
         <Col span={6}>
-          <Tooltip title="Add Result">
-            <Button type="secondary" shape="circle" size="small">
-              <p style={{ color: "blue" }}>+</p>
-            </Button>
-          </Tooltip>
+          <NavLink to="/new-result">
+            <Tooltip title="Add Result">
+              <Button type="secondary" shape="circle" size="small">
+                <p style={{ color: "blue" }}>+</p>
+              </Button>
+            </Tooltip>
+          </NavLink>
         </Col>
       </Row>
 

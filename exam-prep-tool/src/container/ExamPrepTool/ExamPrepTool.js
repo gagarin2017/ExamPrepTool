@@ -4,39 +4,24 @@ import { Form, Input, Button, Checkbox, Row, Col, Tooltip, Modal } from "antd";
 
 import "./ExamPrepTool.css";
 import NewTestResult from "../../components/TestResults/NewTestResult/NewTestResult";
+import { Route, NavLink } from "react-router-dom";
 
 export default class ExamPrepTool extends Component {
   state = {
     results: [],
-    modalVisible: false,
   };
 
-  addNewResultHandler = () => {
-    this.setState({
-      modalVisible: true,
-    });
-  };
+  componentDidUpdate() {
+    console.log("[ExamPropTool] this.props", this.props);
+  }
 
-  handleOk = (e) => {
-    console.log(e.target.values);
-    this.setState({
-      modalVisible: false,
-    });
-  };
+  componentDidMount() {
+    console.log("[ExamPropTool] this.props", this.props);
+  }
 
-  handleCancel = (e) => {
-    console.log(e);
-    this.setState({
-      modalVisible: false,
-    });
-  };
-
-  onFinish = (values) => {
-    console.log("Success:", values);
-  };
-
-  onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+  resultDataHandler = (newTestResult) => {
+    console.log("newTestResult", newTestResult);
+    this.setState({ results: this.state.results.concat(newTestResult) });
   };
 
   render() {
@@ -67,14 +52,14 @@ export default class ExamPrepTool extends Component {
       questionsCorrect: 8,
     };
 
-    const updatedPosts = [...this.state.results];
+    // const updatedTestResults = [...this.state.results];
 
-    updatedPosts.push(result1, result2, result3);
+    // updatedPosts.push(result1, result2, result3);
 
     let results = [];
 
-    if (updatedPosts.length !== 0) {
-      results = updatedPosts.map((result) => (
+    if (this.state.results.length !== 0) {
+      results = this.state.results.map((result) => (
         <TestResults key={result.id} data={result} />
       ));
     } else {
@@ -83,7 +68,14 @@ export default class ExamPrepTool extends Component {
 
     const output = (
       <div className="Tool">
-        <section className="Results">{results}</section>
+        <section className="Results">
+          <Route path="/" exact render={() => results} />
+          <Route
+            path="/new-result"
+            exact
+            render={() => <NewTestResult resultData={this.resultDataHandler} />}
+          />
+        </section>
       </div>
     );
 
