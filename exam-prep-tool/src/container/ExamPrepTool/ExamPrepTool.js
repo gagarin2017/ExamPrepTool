@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import TestResults from "../../components/TestResults/TestResults";
-import { Form, Input, Button, Checkbox, Row, Col, Tooltip, Modal } from "antd";
 
 import "./ExamPrepTool.css";
 import NewTestResult from "../../components/TestResults/NewTestResult/NewTestResult";
-import { Route, NavLink } from "react-router-dom";
+import { Route } from "react-router-dom";
+
+import axios from "../../axios-test-results";
 
 export default class ExamPrepTool extends Component {
   state = {
@@ -22,6 +23,10 @@ export default class ExamPrepTool extends Component {
   resultDataHandler = (newTestResult) => {
     console.log("newTestResult", newTestResult);
     this.setState({ results: this.state.results.concat(newTestResult) });
+    axios
+      .post("/test-results.json", newTestResult)
+      .then((response) => console.log("response", response))
+      .catch((error) => console.log("error", error));
   };
 
   render() {
