@@ -3,13 +3,9 @@ import { Row, Col, Button, Tooltip } from "antd";
 
 import classes from "./TestResult.module.css";
 
-import { Route, NavLink, withRouter } from "react-router-dom";
-
-import NewTestResult from "../NewTestResult/NewTestResult";
+import { NavLink } from "react-router-dom";
 
 const TestResult = (props) => {
-  console.log("[TestResult] props", props);
-
   const numberWrongQuestions = props.questionsTotal - props.questionsCorrect;
   const percentage = (props.questionsCorrect * 100) / props.questionsTotal;
 
@@ -52,7 +48,7 @@ const TestResult = (props) => {
     );
 
   const numberWrongQuestionsStr =
-    numberWrongQuestions == 0 ? (
+    numberWrongQuestions === 0 ? (
       <span>&nbsp;</span>
     ) : (
       <Row>

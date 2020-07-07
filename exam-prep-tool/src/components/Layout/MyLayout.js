@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Layout, Menu, Breadcrumb } from "antd";
+import { Layout, Breadcrumb } from "antd";
 import "antd/dist/antd.css";
 import classes from "./MyLayout.module.css";
 const { Header, Content, Footer } = Layout;

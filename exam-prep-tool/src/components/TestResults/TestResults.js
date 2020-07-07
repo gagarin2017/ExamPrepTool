@@ -3,7 +3,6 @@ import React from "react";
 import TestResult from "./TestResult/TestResult";
 
 const TestResults = (props) => {
-  console.log("[TestResults] props", props);
   const emptyTestResult = (
     <TestResult
       paragraph={props.data}

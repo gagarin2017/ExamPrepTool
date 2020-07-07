@@ -22,8 +22,6 @@ const NewTestResult = (props) => {
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    console.log("Success:", values);
-    console.log("[NewTestResult] props", props);
 
     const updatedValues = { ...values, id: Date.now() };
 

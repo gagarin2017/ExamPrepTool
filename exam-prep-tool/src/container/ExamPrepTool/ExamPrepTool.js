@@ -6,61 +6,46 @@ import NewTestResult from "../../components/TestResults/NewTestResult/NewTestRes
 import { Route } from "react-router-dom";
 
 import axios from "../../axios-test-results";
+import Spinner from "../../components/UI/Spinner/Spinner";
 
 export default class ExamPrepTool extends Component {
   state = {
     results: [],
+    loading: false,
   };
 
-  componentDidUpdate() {
-    console.log("[ExamPropTool] this.props", this.props);
-  }
-
   componentDidMount() {
-    console.log("[ExamPropTool] this.props", this.props);
+    axios
+      .get("https://react-exam-prep-tool.firebaseio.com/test-results.json")
+      .then((response) => {
+        const serverData = { ...response.data };
+        const serverResults = [];
+        for (let index in serverData) {
+          // const testResult = {...serverData[index], id: index}
+
+          serverResults.push(serverData[index]);
+        }
+        this.setState({ results: serverResults });
+      });
   }
 
   resultDataHandler = (newTestResult) => {
+    this.setState({ loading: true });
     console.log("newTestResult", newTestResult);
     this.setState({ results: this.state.results.concat(newTestResult) });
     axios
       .post("/test-results.json", newTestResult)
-      .then((response) => console.log("response", response))
-      .catch((error) => console.log("error", error));
+      .then((response) => {
+        this.setState({ loading: false });
+        console.log("response", response);
+      })
+      .catch((error) => {
+        this.setState({ loading: false });
+        console.log("error", error);
+      });
   };
 
   render() {
-    const result1 = {
-      key: 1,
-      paragraph: 5,
-      date: new Date().toLocaleString(),
-      page: 253,
-      questionsTotal: 50,
-      questionsCorrect: 38,
-    };
-
-    const result2 = {
-      key: 2,
-      paragraph: 5,
-      date: new Date().toLocaleString(),
-      page: 253,
-      questionsTotal: 50,
-      questionsCorrect: 28,
-    };
-
-    const result3 = {
-      key: 3,
-      paragraph: 5,
-      date: new Date().toLocaleString(),
-      page: 253,
-      questionsTotal: 50,
-      questionsCorrect: 8,
-    };
-
-    // const updatedTestResults = [...this.state.results];
-
-    // updatedPosts.push(result1, result2, result3);
-
     let results = [];
 
     if (this.state.results.length !== 0) {
@@ -71,18 +56,26 @@ export default class ExamPrepTool extends Component {
       results.push(<TestResults key="empty" data={null} />);
     }
 
-    const output = (
-      <div className="Tool">
-        <section className="Results">
-          <Route path="/" exact render={() => results} />
-          <Route
-            path="/new-result"
-            exact
-            render={() => <NewTestResult resultData={this.resultDataHandler} />}
-          />
-        </section>
-      </div>
-    );
+    let output = null;
+
+    if (this.state.loading) {
+      output = <Spinner />;
+    } else {
+      output = (
+        <div className="Tool">
+          <section className="Results">
+            <Route path="/" exact render={() => results} />
+            <Route
+              path="/new-result"
+              exact
+              render={() => (
+                <NewTestResult resultData={this.resultDataHandler} />
+              )}
+            />
+          </section>
+        </div>
+      );
+    }
 
     return output;
   }
